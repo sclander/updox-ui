@@ -19,6 +19,19 @@ app.controller('providerController', function() {
 	    {"last_name": "Juday", "first_name": "Tobin", "email_address": "tjuday@updox.com", "specialty": "General Medicine", "practice_name": "Juday Family Practice"}
 	];
 
+	controller.sortOptions = [
+		{'label': 'Last Name', 'value': 'last_name', 'reverse': false},
+		{'label': 'Last Name - Reverse', 'value': 'last_name', 'reverse': true},
+		{'label': 'First Name', 'value': 'first_name', 'reverse': false},
+		{'label': 'First Name - Reverse', 'value': 'first_name', 'reverse': true},
+		{'label': 'Email Address', 'value': 'email_address', 'reverse': false},
+		{'label': 'Email Address - Reverse', 'value': 'email_address', 'reverse': true},
+		{'label': 'Specialty', 'value': 'specialty', 'reverse': false},
+		{'label': 'Specialty - Reverse', 'value': 'specialty', 'reverse': true},
+		{'label': 'Practice Name', 'value': 'practice_name', 'reverse': false},
+		{'label': 'Practice Name - Reverse', 'value': 'practice_name', 'reverse': true}
+	];
+
 	controller.addNewProvider = function() {
 		controller.providers.push({
 			last_name: controller.newProvider.last_name,
@@ -30,6 +43,10 @@ app.controller('providerController', function() {
 	};
 
 	controller.removeProviders = function() {
-		controller.providers.splice(3, 1); //currently testing method
+		for (var i = controller.providers.length - 1; i > -1; i--) { // Iterating backwards to avoid index errors after deletion 
+			if (controller.providers[i].checked) {
+				controller.providers.splice(i, 1);
+			}
+		}
 	};
 });

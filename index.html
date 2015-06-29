@@ -1,35 +1,55 @@
 <html ng-app="app">
 	<head>
-		<link src="style.min.css" rel="stylesheet">
+		<link href="style.min.css" rel="stylesheet">
 	</head>
 	<body ng-controller="providerController as controller">
-		<form class="provider-form" ng-submit="controller.addNewProvider()">
-			<label>Last Name</label>
-			<input ng-model="controller.newProvider.last_name"></input>
-			<label>First Name</label>
-			<input ng-model="controller.newProvider.first_name"></input>
-			<label>Email Address</label>
-			<input ng-model="controller.newProvider.email_address"></input>
-			<label>Specialty</label>
-			<input ng-model="controller.newProvider.specialty"></input>
-			<label>Practice Name</label>
-			<input ng-model="controller.newProvider.practice_name"></input>
-			<input type="submit"></input>
-		</form>
-		<div class="provider-list">
-			<div ng-repeat="provider in controller.providers">
-				<div class="check-container">
-					<input type="checkbox">
+		<div class="container">
+			<header>
+				<h1>Provider Directory</h1>
+				<h2>v2.0</h2>
+			</header>
+			<section>
+				<form class="provider-form gray-border-box" ng-submit="controller.addNewProvider()">
+					<h4>Create Provider</h4>
+					<label>Last Name</label>
+					<input type="text" ng-model="controller.newProvider.last_name"></input>
+					<label>First Name</label>
+					<input type="text" ng-model="controller.newProvider.first_name"></input>
+					<label>Email Address</label>
+					<input type="text" ng-model="controller.newProvider.email_address"></input>
+					<label>Specialty</label>
+					<input type="text" ng-model="controller.newProvider.specialty"></input>
+					<label>Practice Name</label>
+					<input type="text" ng-model="controller.newProvider.practice_name"></input>
+					<input class="border-btn" type="submit"></input>
+				</form>
+				<div class="provider-list gray-border-box">
+					<div class="list-header">
+						<h4>Provider List</h4>
+						<select ng-model="controller.sort" ng-options="item as item.label for item in controller.sortOptions" class="border-btn">
+							<option value="">Sort By:</option>
+						</select>
+					</div>
+					<div class="scroll-container">
+						<div class="provider" ng-repeat="provider in controller.providers | orderBy : controller.sort.value : controller.sort.reverse">
+							<div class="check-container">
+								<input ng-model="provider.checked" type="checkbox">
+							</div>
+							<div class="info-container">
+								<div class="contact">
+									<h3>{{provider.last_name}}, {{provider.first_name}}</h3>
+									<p>{{provider.email_address}}</p>
+								</div>
+								<div class="practice">			
+									<h5>{{provider.specialty}}</h5>
+									<p>{{provider.practice_name}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button class="border-btn" ng-click="controller.removeProviders()">Remove</button>
 				</div>
-				<div class="info-container">
-					{{provider.last_name}}
-					{{provider.first_name}}
-					{{provider.email_address}}
-					{{provider.specialty}}
-					{{provider.practice_name}}
-				</div>
-			</div>
-			<button ng-click="controller.removeProviders()">Remove</button>
+			</section>
 		</div>
 
 		<!-- Load Angular -->
